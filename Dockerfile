@@ -24,13 +24,12 @@ RUN mkdir /etc/ntp.d && \
     mkdir /var/log/ntpstats && \
     mkdir /var/lib/ntp
 
-COPY config/ntp.drift /etc/ntp.d/drift
-COPY config/ntp.logging /etc/ntp.d/logging
-COPY config/ntp.security /etc/ntp.d/security
-COPY config/ntp.pool /etc/ntp.d/pool
+COPY config /etc/ntp.d/config
 
 # clean up
 RUN rm -rf /var/lib/apt/lists/* && \
     rm -rf /root/ntpsec-1.1.0
 
-ENTRYPOINT /usr/local/sbin/ntpd -n
+EXPOSE 123/udp
+
+ENTRYPOINT /usr/local/sbin/ntpd -c /etc/ntp.d/config -n

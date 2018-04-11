@@ -1,3 +1,7 @@
+# Sample config file for NTPD
+
+driftfile /var/lib/ntp/ntp.drift
+
 statsdir /var/log/ntpstats/
 
 statistics loopstats peerstats clockstats
@@ -7,3 +11,9 @@ filegen clockstats file clockstats type day enable
 
 logfile /var/log/ntpd.log
 logconfig =syncall +clockall +peerall +sysall
+
+pool ubuntu.pool.ntp.org
+restrict default kod limited nomodify nopeer noquery
+restrict -6 default kod limited nomodify nopeer noquery
+restrict 127.0.0.1
+restrict -6 ::1
