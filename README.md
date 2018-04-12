@@ -13,11 +13,16 @@ Then, build with the following command (replace 1.1.0 with the appropriate versi
 
 Run with:
 
-```docker run --name ntpd --privileged -ti -d devananda/ntpsec:1.1.0```
+```docker run --name ntpd --privileged --net=host -ti -d devananda/ntpsec:1.1.0```
 
 Notes
 =====
 
-Right now, this copies config files to `/etc/ntp.d/` during the image build process.
+You must use `--net=host` because Docker does not NAT UDP traffic; without this
+option, `ntpd` won't be able to receive any replies from other time servers.
 
-Alternatively, these could be mounted as a volume to enable easier editing at run-time.
+Right now, this copies config file to `/etc/ntp.d/` during the image build
+process. If you want to modify the config file for your instance, you should
+mount it as a docker volume and override the `/etc/ntp.d/` directory, eg:
+
+```docker run --name your-ntpd --privileged --net=host -v /path/to/config:/etc/ntp.d/ -ti -d devananda/ntpsec:1.1.0```

@@ -4,11 +4,11 @@ WORKDIR /root
 COPY ntpsec-1.1.0.tar.gz /root/
 
 # prepare build environment
-RUN tar -xzvf ntpsec-1.1.0.tar.gz ;\
+RUN tar -xzf ntpsec-1.1.0.tar.gz ;\
     rm ntpsec-1.1.0.tar.gz ;\
     cd ntpsec-1.1.0 ;\
     apt-get update ;\
-    ./buildprep 
+    ./buildprep
 
 # install ntpsec
 RUN cd ntpsec-1.1.0 ;\
